@@ -28,7 +28,7 @@ situacion <- info_bcra_sdc$sit_wenance_informar
 
 total_deuda <- ifelse(round((info_bcra_sdc$`Total de deuda` - info_bcra_sdc$PunitoriosAdeudados)/1000,1)<0.5,
                       round((info_bcra_sdc$SaldoCuotasNoVencidas)/1000,1),
-                      round((info_bcra_sdc$`Total de deuda` - info_bcra_sdc$PunitoriosAdeudados)/1000,1))
+                      round((info_bcra_sdc$`Total de deuda` - info_bcra_sdc$PunitoriosAdeudados)/1000,1))*1000
 
 Deudor_encuadrado <- rep(0,nrow(info_bcra_sdc))
 
@@ -60,3 +60,6 @@ proveedores <- data.frame(codigo_diseno=codigo_diseño,codigo_entidad,fecha_info
 proveedores <- proveedores %>% filter(total_deuda>0.5)
 
 
+proveedores$total_deuda <- str_pad(proveedores$total_deuda,14, pad = "0")
+proveedores$fecha_ult_refi <- str_pad(proveedores$fecha_ult_refi,8, pad = "0")
+proveedores$dias_atraso <- str_pad(proveedores$dias_atraso,4, pad = "0")
